@@ -16,29 +16,81 @@ const render = require("./src/page-template.js");
 // Create an empty array to store team members
 const team = [];
 
-//Function to add a new member to the team
-const addEmployee = (employeeType) => {
-  switch (employeeType) {
-    case 'Engineer':
-      return inquirer.prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: "What's the engineer's name?",
-        },
-        {
-          type: 'input',
-          name: 'id',
-          message: "What's the engineer's ID?",
-        },
-        {
-          type: 'input',
-          name: 'email',
-          message: "What's the engineer's email?",
-        },
-        {
-          type: 'input',
-          name: 'github',
-          message: "What's the engineer's GitHub username?",
-        },
-      ])
+//Object of roles for user to choose from when adding a new member and prompt questions 
+const roles = {
+  Manager: {
+    questions: [
+      {
+        type: 'input',
+        name: 'name',
+        message: "What's the manager's name?",
+      },
+      {
+        type: 'input',
+        name: 'id',
+        message: "What's the manager's ID?",
+      },
+      {
+        type: 'input',
+        name: 'email',
+        message: "What's the manager's email?",
+      },
+      {
+        type: 'input',
+        name: 'officeNumber',
+        message: "What's the manager's office number?",
+      },
+    ],
+    constructor: Manager,
+  },
+  Engineer: {
+    questions: [
+      {
+        type: 'input',
+        name: 'name',
+        message: "What's the engineer's name?",
+      },
+      {
+        type: 'input',
+        name: 'id',
+        message: "What's the engineer's ID?",
+      },
+      {
+        type: 'input',
+        name: 'email',
+        message: "What's the engineer's email?",
+      },
+      {
+        type: 'input',
+        name: 'github',
+        message: "What's the engineer's GitHub username?",
+      },
+    ],
+    constructor: Engineer,
+  },
+  Intern: {
+    questions: [
+      {
+        type: 'input',
+        name: 'name',
+        message: "What's the intern's name?",
+      },
+      {
+        type: 'input',
+        name: 'id',
+        message: "What's the intern's ID?",
+      },
+      {
+        type: 'input',
+        name: 'email',
+        message: "What's the intern's email?",
+      },
+      {
+        type: 'input',
+        name: 'school',
+        message: "What's the intern's school?",
+      },
+    ],
+    constructor: Intern,
+  },
+};
