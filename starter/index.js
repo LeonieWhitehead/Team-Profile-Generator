@@ -112,3 +112,9 @@ const addEmployee = (role) => {
     }
   });
 };
+
+const init = () => {
+  addEmployee('Manager');
+};
+
+init();
