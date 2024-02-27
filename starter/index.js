@@ -99,17 +99,17 @@ const roles = {
 const addEmployee = (role) => {
   const { questions, constructor } = roles[role];
   inquirer.prompt(questions).then((answers) => {
-    // const employee = new constructor(answers.name, answers.id, answers.email, answers.roleSpecific);
-    // team.push(employee);
-    // const nextRole = Object.keys(roles).find((r) => r !== role);
-    // if (nextRole) {
-    //   addEmployee(nextRole);
-    // } else {
-    //   const html = generateTeam(team);
-    //   writeFile(outputPath, html)
-    //     .then(() => console.log('Successfully wrote to team.html'))
-    //     .catch((err) => console.error(err));
-    // }
+    const employee = new constructor(answers.name, answers.id, answers.email, answers.roleSpecific);
+    team.push(employee);
+    const nextRole = Object.keys(roles).find((r) => r !== role);
+    if (nextRole) {
+      addEmployee(nextRole);
+    } else {
+      const html = generateTeam(team);
+      writeFile(outputPath, html)
+        .then(() => console.log('Successfully wrote to team.html'))
+        .catch((err) => console.error(err));
+    }
   });
 };
 
