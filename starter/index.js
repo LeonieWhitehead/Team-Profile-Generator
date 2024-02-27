@@ -96,25 +96,35 @@ const roles = {
 };
 
 //  Function to create a new employee based on user input and add it to team array.
-const addEmployee = (role) => {
-  const { questions, constructor } = roles[role];
-  inquirer.prompt(questions).then((answers) => {
-    const employee = new constructor(answers.name, answers.id, answers.email, answers.roleSpecific);
-    team.push(employee);
-    const nextRole = Object.keys(roles).find((r) => r !== role);
-    if (nextRole) {
-      addEmployee(nextRole);
-    } else {
-      const html = generateTeam(team);
+const addEmployee = () => {
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'role',
+      message: 'Choose the role of the team member:',
+      choices: ['Manager', 'Engineer', 'Intern', 'Finish building the team'],
+    },
+  ]).then((answers) => {
+    const role = answers.role;
+
+    if (role === 'Finish building the team') {
+      const html = render(team);
       writeFile(outputPath, html)
         .then(() => console.log('Successfully wrote to team.html'))
         .catch((err) => console.error(err));
+    } else {
+      const { questions, constructor } = roles[role];
+      inquirer.prompt(questions).then((answers) => {
+        const employee = new constructor(answers.name, answers.id, answers.email, answers[role.toLowerCase()]);
+        team.push(employee);
+        addEmployee();  // Recursively call the function for the next team member
+      });
     }
   });
 };
 
 const init = () => {
-  addEmployee('Manager');
+  addEmployee();
 };
 
 init();
